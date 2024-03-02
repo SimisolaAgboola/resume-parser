@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Resume Parser - Result</title>
     <style>
         body {
           font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
         }
-        
-        .container {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        header{
+          width: 100%;
+          height: 70px;
+          background: #fff;
+          border-bottom: 1px solid rgba(34, 90, 89, 0.2);
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          padding: 30px;
         }
-        
+        body{
+          display: flex;
+          flex-direction: column;
+          background: #fff;
+          min-height: calc(100vh - 70px - 272px);
+          flex: auto;
+          align-items: center;
+          justify-content: center;
+        }
+      
         .form-group {
           margin: 20px;
         }
@@ -41,37 +53,101 @@
           text-decoration: none;
           border-radius: 5px;
         }
+
+        .sec{
+          display: flex;
+          flex-direction: row;
+          border-top: 1px solid rgba(34, 90, 89, 0.2);
+          border-bottom: 1px solid rgba(34, 90, 89, 0.2);
+          align-items: center;
+          justify-content: center;
+        }
+        .sec1{
+          width: 50%;
+        }
+        .sec2{
+          width: 50%
+        }
+        a{
+          text-decoration: none;
+          color: white;
+          font-style: Arial, sans-serif;
+          transition-duration: 0.4s;
+        }
+        a:hover{
+          color: antiquewhite;
+        }
       </style>
-</head>
-<body>
+  </head>
+
+  <body>
+    <header>
+      <h1>Resume Results</h1>
+      <div class="btn"><a href="https://github.com/SimisolaAgboola/resume-parser">View on github</a></div>
+    </header>
+
     <div class="container">
-        <h1>Resume Parsing Result</h1>
-        <p>Name: {{ name }}</p>
-        <h2>Contact Information</h2>
-        <p>Email: {{ email }}</p>
-        <p>Phone: {{ phone }}</p>
-        
-        <h2>Education</h2>
-        <ul>
-            {% for edu in education %}
-                <li>{{ edu[0] }} - {{ edu[1] }}, {{ edu[2] }}</li>
-            {% endfor %}
-        </ul>
-        
-        <h2>Skills</h2>
-        <ul>
-            {% for skill in skills %}
-                <li>{{ skill }}</li>
-            {% endfor %}
-        </ul>
-        
-        <h2>Experience</h2>
-        <ul>
-            {% for exp in experience %}
-                <li>{{ exp }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-   
-</body>
+      <div class="sec">
+        <div class="sec1">
+          <h2>Resume</h2>
+          <div id="resumeContent">
+            <p>Please drag your resume here</p>
+          </div>
+        </div>
+        <div class="sec2">
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec1">
+          <h2>Basic Information</h2>
+          <p>Please add basic information.</p>
+        </div>
+        <div class="sec2">
+          <p>Name: {{ name }}</p>
+          <p>Mobile: {{ phone }}</p>
+          <p>Email: {{ email }}</p>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec1">
+          <h2>Education</h2>
+          <p>Please add education experience.</p>
+        </div>
+        <div class="sec2">
+          <p>School: {{ university }}</p>
+          <p>Degree: {{ degree }}</p>
+          <p>Major: {{ major }}</p>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec1">
+          <h2>Skills</h2>
+          <p>Please add skills information.</p>
+        </div>
+        <div class="sec2">
+          <p>Skills: {{ skills }}</p>
+        </div>
+      </div>
+    </div> 
+  </body>
+  <script>
+    window.onload = function() {
+      const fileInput = document.querySelector('input[type="file"]');
+
+      fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function() {
+          const resumeContent = document.getElementById('resumeContent');
+          resumeContent.innerHTML = `<p>Uploaded Resume: ${file.name}</p>`;
+        };
+
+        reader.readAsDataURL(file);
+      });
+    };
+  </script>
 </html>
